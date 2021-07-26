@@ -320,31 +320,7 @@ PARSER=$(wildcard *.mly)
 
 -include .depend
 
-# project specific rules
-########################
-
-$(ATP)/atp_batch.cma:
-	cd $(ATP) && make all
-
-$(ATP)/atp_batch.cmxa:
-	cd $(ATP) && make all
-
 # install
 
-META: META.in Makefile
-	sed -e s/REQUIRES/"$(REQUIRES)"/ $@.in | \
-    sed -e s/CCOPT/"$(CCOPT)"/ > $@
-
-install-lib: $(ATP)/atp_batch.cma $(ATP)/atp_batch.cmxa
-	$(OCAMLFIND) remove atp; \
-	$(OCAMLFIND) install atp \
-		$(ATP)/META \
-		$(ATP)/atp_batch.a \
-		$(ATP)/atp_batch.cmi \
-		$(ATP)/atp_batch.cma \
-		$(ATP)/atp_batch.cmxa
-
-install: META
-	$(OCAMLFIND) remove fpat
-	$(OCAMLFIND) install fpat \
-		META fpat.a fpat.cmi $(CMA) $(CMXA) $(A)
+install:
+	$(OCAMLFIND) install fpat META fpat.a fpat.cmi $(CMA) $(CMXA) $(A)

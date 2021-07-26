@@ -2,5 +2,5 @@
   (name libfpat)
   (public_name fpat)
   (flags (:standard -w -a -warn-error -a))
-  (libraries str unix bigarray num batteries zarith atp csisat z3 apron.apron apron.polkaMPQ conf-autoconf)
+  (libraries str unix bigarray num batteries zarith atp csisat z3 apron.apron apron.polkaMPQ)
   (modules_without_implementation refTypCheck))

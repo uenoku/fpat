@@ -1,0 +1,26 @@
+opam-version: "2.0"
+maintainer: "Ryosuke SATO <rsato@is.s.u-tokyo.ac.jp>"
+authors: [
+  "Hiroshi Unno <uhiro@cs.tsukuba.ac.jp>"
+]
+homepage: "https://github.com/ryosu-sato/fpat"
+dev-repo: "git+https://github.com/ryosu-sato/fpat.git"
+bug-reports: "https://github.com/ryosu-sato/fpat/issues"
+build: [
+  ["autoconf"]
+  ["./configure"]
+  [make]
+]
+install: [
+  [make "install"]
+]
+depends: [
+  "num"
+  "batteries"
+  "zarith"
+  "atp"
+  "csisat"
+  "z3"
+  "apron"
+]
+synopsis: "A framework for program analysis and transformation"

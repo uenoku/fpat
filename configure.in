@@ -5,7 +5,7 @@
 
 # check for one particular file of the sources
 # ADAPT THE FOLLOWING LINE TO YOUR SOURCES!
-AC_INIT(lib/util.ml)
+AC_INIT(util.ml)
 
 # we first look for ocamlfind
 AC_CHECK_PROG(OCAMLFIND,ocamlfind,ocamlfind,no)

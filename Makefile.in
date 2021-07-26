@@ -1,5 +1,3 @@
-include Makefile.config
-
 # OCaml tools
 OCAMLFIND = @OCAMLFIND@
 OCAMLLEX  = @OCAMLLEX@

@@ -893,7 +893,7 @@ let save_smtlib2 filename hcs =
     | ty when Type.is_var ty -> if !is_real then " Real" else " Int"
     | ty when Type.is_unit ty -> " Int" (* TODO: fix *)
     | ty when Type.is_ext ty -> " Int" (* TODO: fix *)
-    | ty -> "IntList"
+    | ty -> " IntList"
   in
   let args_ty ty =
     let args, ret = Type.args_ret ty in

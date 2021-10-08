@@ -173,7 +173,7 @@ and sexp_of_formula ?(smt2=false) =
 and sexp_of t =
   fold
     (object
-      method fvar x [] = Idnt.string_of x
+      method fvar x _ = Idnt.string_of x (* FIXME: fix *)
       method funit () = "0" (* TODO: fix *)
       method ftrue () = "true"
       method ffalse () = "false"

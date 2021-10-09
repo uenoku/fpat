@@ -445,7 +445,13 @@ let sexp_of =
               "(= " ^ CunTerm.sexp_of t1 ^ " " ^ CunTerm.sexp_of t2 ^ "))"
  *)
       method fdivides n t = assert false
-      method fterm c ts = assert false
+      method fterm c ts = 
+        if ts = [] then CunTerm.sexp_of x
+        else
+          "(" ^
+          CunTerm.sexp_of x ^ " " ^
+          String.concat " " (List.map CunTerm.sexp_of ts) ^
+          ")"
     end)
 
 let is_linear =

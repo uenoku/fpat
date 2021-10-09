@@ -36,6 +36,9 @@ type t =
   (* lists *)
   | Nil of Type.t
   | Cons of Type.t
+  | Hd of Type.t
+  | Tl of Type.t
+  | IsNil of Type.t
   (* uninterpreted functions *)
   | UFun of Type.t * Idnt.t
   (* path constructors *)
@@ -142,7 +145,10 @@ let string_of = function
   (* lists *)
   | Nil(_) -> "[]"
   (* @todo not supported by OCaml *)
-  | Cons(_) -> "(::)"
+  | Cons (_) -> "(::)"
+  | Hd(_) ->  "hd"
+  | Tl(_) -> "tl"
+  | IsNil(_) -> "is_nil"
   (* path constructors *)
   | Call -> "Call"
   | Ret(_) -> "Ret"
@@ -261,6 +267,9 @@ let tex_string_of = function
   | Nil(_) -> "[]"
   (* @todo not supported by OCaml *)
   | Cons(_) -> "(::)"
+  | Hd(_) ->  "hd"
+  | Tl(_) -> "tl"
+  | IsNil(_) -> "is_nil"
   (* uninterpreted functions *)
   | UFun(ty, x) -> Idnt.string_of x
   (* path constructors *)

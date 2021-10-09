@@ -151,7 +151,14 @@ let rec sexp_of_atom atom =
       method frecognizer ty x t = assert false
       method fsmem ty t1 t2 = assert false
       method fssubset ty t1 t2 = assert false
-      method fterm c ts = assert false
+      method fterm c ts = 
+        if ts = [] then Const.string_of c
+        else (
+          "(" ^
+          Const.string_of c ^ " " ^
+          String.concat " " (List.map sexp_of ts) ^
+          ")"
+        )
     end) atom
 
 and sexp_of_formula ?(smt2=false) =

@@ -41,6 +41,9 @@ type t =
   (* lists *)
   | Nil of Type.t
   | Cons of Type.t
+  | Hd of Type.t
+  | Tl of Type.t
+  | IsNil of Type.t 
   (* uninterpreted functions *)
   | UFun of Type.t * Idnt.t
   (* path constructors *)

@@ -446,12 +446,13 @@ let sexp_of =
  *)
       method fdivides n t = assert false
       method fterm c ts = 
-        if ts = [] then CunTerm.sexp_of c
-        else
+        if ts = [] then Const.string_of c
+        else (
           "(" ^
-          CunTerm.sexp_of c ^ " " ^
+          Const.string_of c ^ " " ^
           String.concat " " (List.map CunTerm.sexp_of ts) ^
           ")"
+        )
     end)
 
 let is_linear =

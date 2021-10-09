@@ -446,10 +446,10 @@ let sexp_of =
  *)
       method fdivides n t = assert false
       method fterm c ts = 
-        if ts = [] then CunTerm.sexp_of x
+        if ts = [] then CunTerm.sexp_of c
         else
           "(" ^
-          CunTerm.sexp_of x ^ " " ^
+          CunTerm.sexp_of c ^ " " ^
           String.concat " " (List.map CunTerm.sexp_of ts) ^
           ")"
     end)

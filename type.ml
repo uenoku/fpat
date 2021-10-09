@@ -70,6 +70,8 @@ let rec para f ty =
     f#fvar x
   | Const(c), [] when TypConst.is_base c ->
     f#fbase c
+  | Const(c), todo when TypConst.is_base c ->
+    f#fbase c
   | Const(TypConst.Arrow), [ty1; ty2] ->
     let r1 = para f ty1 in
     let r2 = para f ty2 in

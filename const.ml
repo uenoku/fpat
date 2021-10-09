@@ -441,6 +441,9 @@ let type_of = function
   (* lists *)
   | Nil(ty) -> Type.mk_list ty
   | Cons(ty) -> Type.mk_fun [ty; Type.mk_list ty; Type.mk_list ty]
+  | Hd(ty) -> Type.mk_fun [Type.mk_list ty; ty] 
+  | Tl(ty) -> Type.mk_fun [Type.mk_list ty; Type.mk_list ty] 
+  | IsNil(ty) -> Type.mk_fun [Type.mk_list ty; Type.mk_bool] 
   (* uninterpreted functions *)
   | UFun(ty, _) -> ty
   (* path constructors *)

@@ -143,9 +143,9 @@ let string_of = function
   (* strings *)
   | String(str) -> "\"" ^ String.escaped str ^ "\""
   (* lists *)
-  | Nil(_) -> "[]"
+  | Nil(_) -> "nil"
   (* @todo not supported by OCaml *)
-  | Cons (_) -> "(::)"
+  | Cons (_) -> "cons"
   | Hd(_) ->  "hd"
   | Tl(_) -> "tl"
   | IsNil(_) -> "is_nil"
@@ -264,9 +264,9 @@ let tex_string_of = function
   (* strings *)
   | String(str) -> "\"" ^ String.escaped str ^ "\""
   (* lists *)
-  | Nil(_) -> "[]"
+  | Nil(_) -> "nil"
   (* @todo not supported by OCaml *)
-  | Cons(_) -> "(::)"
+  | Cons(_) -> "cons"
   | Hd(_) ->  "hd"
   | Tl(_) -> "tl"
   | IsNil(_) -> "is_nil"

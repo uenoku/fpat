@@ -39,6 +39,7 @@ type t =
   | Hd of Type.t
   | Tl of Type.t
   | IsNil of Type.t
+  | IsCons of Type.t
   (* uninterpreted functions *)
   | UFun of Type.t * Idnt.t
   (* path constructors *)
@@ -149,6 +150,7 @@ let string_of = function
   | Hd(_) ->  "hd"
   | Tl(_) -> "tl"
   | IsNil(_) -> "is_nil"
+  | IsCons(_) -> "is_cons"
   (* path constructors *)
   | Call -> "Call"
   | Ret(_) -> "Ret"
@@ -270,6 +272,7 @@ let tex_string_of = function
   | Hd(_) ->  "hd"
   | Tl(_) -> "tl"
   | IsNil(_) -> "is_nil"
+  | IsCons(_) -> "is_cons"
   (* uninterpreted functions *)
   | UFun(ty, x) -> Idnt.string_of x
   (* path constructors *)
@@ -444,6 +447,7 @@ let type_of = function
   | Hd(ty) -> Type.mk_fun [Type.mk_list ty; ty] 
   | Tl(ty) -> Type.mk_fun [ty; ty] 
   | IsNil(ty) -> Type.mk_fun [ty; Type.mk_bool] 
+  | IsCons(ty) -> Type.mk_fun [ty; Type.mk_bool] 
   (* uninterpreted functions *)
   | UFun(ty, _) -> ty
   (* path constructors *)

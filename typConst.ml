@@ -71,6 +71,7 @@ let sexp_of = function
 
 let is_base = function
   | Unit | Bool | Int | Real | String
+  | List
   | Ext(_)(*@todo?*)
   | Bot | Top
   | Unknown -> true

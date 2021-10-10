@@ -185,7 +185,7 @@ and sexp_of t =
         else (
           "(" ^
           Idnt.string_of x ^ " " ^
-          String.concat " " (List.map sexp_of xs) ^
+          String.concat " " (List.map Idnt.string_of xs) ^
           ")"
         )
       method funit () = "0" (* TODO: fix *)

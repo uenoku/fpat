@@ -181,10 +181,10 @@ and sexp_of t =
   fold
     (object
       method fvar x xs =  (* FIXME: fix *)
-      if xs = [] then Idnt.string_of c
+      if xs = [] then Idnt.string_of x
         else (
           "(" ^
-          Idnt.string_of c ^ " " ^
+          Idnt.string_of x ^ " " ^
           String.concat " " (List.map sexp_of xs) ^
           ")"
         )

@@ -16,7 +16,7 @@ let debug_level = ref 30
 let timeout = ref 100 (* sec *)
 let timeout_z3 = ref 6000 (* ms *)
 
-let print_log = ref false
+let print_log = ref true
 let log_fileformatter = ref Format.std_formatter
 let silent = ref false
 

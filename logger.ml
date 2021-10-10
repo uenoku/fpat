@@ -43,10 +43,13 @@ let check_filter str =
 let check_kinds k = List.mem k !filter_kinds
 
 let check () =
+  true
+  (*
   !Global.debug
   && !Global.debug_level >= !current_level
   && !fun_stack <> []
   && !call_id_stack > 0
+  *)
 
 let ppf = ref Format.std_formatter
 let oc = ref None

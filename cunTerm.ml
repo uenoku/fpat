@@ -180,7 +180,14 @@ and sexp_of_formula ?(smt2=false) =
 and sexp_of t =
   fold
     (object
-      method fvar x _ = Idnt.string_of x (* FIXME: fix *)
+      method fvar x xs =  (* FIXME: fix *)
+      if ts = [] then Idnt.string_of c
+        else (
+          "(" ^
+          Idnt.string_of c ^ " " ^
+          String.concat " " (List.map sexp_of xs) ^
+          ")"
+        )
       method funit () = "0" (* TODO: fix *)
       method ftrue () = "true"
       method ffalse () = "false"

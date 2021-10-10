@@ -181,7 +181,7 @@ and sexp_of t =
   fold
     (object
       method fvar x xs =  (* FIXME: fix *)
-      if ts = [] then Idnt.string_of c
+      if xs = [] then Idnt.string_of c
         else (
           "(" ^
           Idnt.string_of c ^ " " ^

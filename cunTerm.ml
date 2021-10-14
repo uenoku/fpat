@@ -35,6 +35,7 @@ let rec fold f t =
   | Const(Const.Annot(_)), [t] -> fold f t(* @todo *)
   | Const(Const.UFun(ty, x)), ts -> f#fufun ty x (List.map (fold f) ts)
   | Const(Const.Coerce(ty)), [t] -> f#fcoerce ty (fold f t)
+  | Const(Const.Nil(ty)), [] -> f#fnil ty
   | Const(_), _ -> f#fformula (t |> Formula.of_term)
   | _ ->
     invalid_arg ("not supported in CunTerm.fold: " ^

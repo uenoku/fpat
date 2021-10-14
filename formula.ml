@@ -230,7 +230,8 @@ let rec para f phi =
     f#fforall (x, ty) phi1 (para f phi1)
   | Binder(Binder.Exists(ty), Pattern.V(x), phi1), [] ->
     f#fexists (x, ty) phi1 (para f phi1)
-
+  | Const(Const.Nil(ty)), [] ->
+    f#fnil ty
   | Var(_), _ | Const(_), _ ->
     phi |> Atom.of_term |> f#fatom
   | _ ->

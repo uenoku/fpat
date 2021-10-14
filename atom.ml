@@ -19,6 +19,7 @@ let mk_false = BoolTerm.mk_false
 let mk_var x = mk_app (mk_var x)
 let mk_urel c t = mk_app (mk_const c) [t]
 let mk_brel c t1 t2 = mk_app (mk_const c) [t1; t2]
+let mk_nil ty = mk_const (Const.Nil ty)
 
 let eq ty t1 t2 = mk_brel (Const.Eq ty) t1 t2
 let neq ty t1 t2 = mk_brel (Const.Neq ty) t1 t2

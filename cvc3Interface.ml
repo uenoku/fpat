@@ -169,6 +169,7 @@ let rec string_of_formula phi =
           ^ string_of_formula phi'
           ^ ")"
       method fexists _ _ _ = assert false
+      method fnil ty = assert false
     end)
 
 let is_valid_cvc3 t =
@@ -512,6 +513,7 @@ let string_of_formula_bv rbit t =
       method fiff s1 s2 = "(" ^ s1 ^ " <=> " ^ s2 ^ ")"
       method fforall _ _ = assert false
       method fexists _ _ = assert false
+      method fnil ty = assert false
     end)
 
 let solve_nat_bv_cvc3 cin cout cerr rbit phi =

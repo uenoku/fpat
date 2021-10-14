@@ -174,6 +174,7 @@ let of_term =
       method fcoerce _ r = fun var_tenv bind_tenv ->
         Z3.Arithmetic.Integer.mk_int2real ctx (r var_tenv bind_tenv)
       method fformula = !of_formula'
+      method fnil ty = assert false
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term
 
@@ -227,6 +228,8 @@ let of_atom =
              (Term.mk_app (Term.mk_const c) ts)
              var_tenv bind_tenv)
           (Boolean.mk_true ctx)
+
+      method fnil ty = assert false
     end)
 let of_atom = Logger.log_block3 "Z3Interface.of_atom" of_atom
 
@@ -275,6 +278,7 @@ let of_formula =
           (s1 var_tenv ((x, ty') :: bind_tenv))
           None [] [] None None
         |> Quantifier.expr_of_quantifier
+      method fnil ty = assert false
     end)
 let of_formula =
   Logger.log_block3 "Z3Interface.of_formula"

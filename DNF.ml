@@ -62,6 +62,8 @@ let of_formula =
         raise (Global.NotImplemented "DNF.of_formula")
       method fexists _ _ = fun b ->
         raise (Global.NotImplemented "DNF.of_formula")
+      method fnil ty = fun b ->
+        raise (Global.NotImplemented "DNF.of_formula")
     end)
 let of_formula phi = of_formula phi true
 

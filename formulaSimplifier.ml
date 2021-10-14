@@ -28,6 +28,7 @@ let rec simplify phi =
       method fiff _ phi1 _ phi2 = mk_iff (Lazy.force phi1) (Lazy.force phi2)
       method fforall xty _ phi1 = forall [xty] (Lazy.force phi1)
       method fexists xty _ phi1 = exists [xty] (Lazy.force phi1)
+      method fnil ty = mk_nil ty
     end)
     phi
 let simplify =

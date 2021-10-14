@@ -48,6 +48,7 @@ val of_atom : Atom.t -> t
 
 val mk_true : t
 val mk_false : t
+val mk_nil : Type.t -> t
 val mk_var : Idnt.t -> Term.t list -> t
 val mk_brel : Const.t -> Term.t -> Term.t -> t
 
@@ -93,7 +94,9 @@ val para :
     fiff : t -> 'a -> t -> 'a -> 'a;
     fimply : t -> 'a -> t -> 'a -> 'a;
     fforall : TypEnv.elem -> t -> 'a -> 'a;
-    fexists : TypEnv.elem -> t -> 'a -> 'a; .. > ->
+    fexists : TypEnv.elem -> t -> 'a -> 'a;
+    fnil : Type.t -> 'a;
+     .. > ->
   t -> 'a
 val lazy_para :
   < fatom : Atom.t -> 'a;
@@ -105,7 +108,9 @@ val lazy_para :
     fiff : t -> 'a lazy_t -> t -> 'a lazy_t -> 'a;
     fimply : t -> 'a lazy_t -> t -> 'a lazy_t -> 'a;
     fforall : TypEnv.elem -> t -> 'a lazy_t -> 'a;
-    fexists : TypEnv.elem -> t -> 'a lazy_t -> 'a; .. > ->
+    fexists : TypEnv.elem -> t -> 'a lazy_t -> 'a;
+    fnil : Type.t -> 'a;
+    .. > ->
   t -> 'a
 val fold :
   < fatom : Atom.t -> 'a;
@@ -117,7 +122,9 @@ val fold :
     fiff : 'a -> 'a -> 'a;
     fimply : 'a -> 'a -> 'a;
     fforall : TypEnv.elem -> 'a -> 'a;
-    fexists : TypEnv.elem -> 'a -> 'a; .. > ->
+    fexists : TypEnv.elem -> 'a -> 'a; 
+    fnil : Type.t -> 'a;
+    .. > ->
   t -> 'a
 val fold_pos :
   < fatom : bool -> Atom.t -> 'a;
@@ -129,7 +136,9 @@ val fold_pos :
     fiff : 'a -> 'a -> 'a;
     fimply : 'a -> 'a -> 'a;
     fforall : TypEnv.elem -> 'a -> 'a;
-    fexists : TypEnv.elem -> 'a -> 'a; .. > ->
+    fexists : TypEnv.elem -> 'a -> 'a;
+    fnil : Type.t -> 'a;
+     .. > ->
   t -> 'a
 val visit :
   < fatom : Atom.t -> 'a;
@@ -141,7 +150,9 @@ val visit :
     fiff : t -> t -> 'a;
     fimply : t -> t -> 'a;
     fforall : TypEnv.elem -> t -> 'a;
-    fexists : TypEnv.elem -> t -> 'a; .. > ->
+    fexists : TypEnv.elem -> t -> 'a;
+    fnil : Type.t -> 'a;
+    .. > ->
   t -> 'a
 
 val map_var : (Idnt.t -> Idnt.t) -> t -> t

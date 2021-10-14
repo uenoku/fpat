@@ -28,6 +28,7 @@ let size =
       method fiff s1 s2 = s1 + s2 + 1
       method fforall _ s1 = s1 + 1
       method fexists _ s1 = s1 + 1
+      method fnil ty = 1
     end)
 
 let sexp_of ?(smt2=false) =
@@ -44,6 +45,7 @@ let sexp_of ?(smt2=false) =
       method fiff s1 s2 = "(iff " ^ s1 ^ " " ^ s2 ^ ")"
       method fforall (x, ty) s = assert false
       method fexists (x, ty) s = assert false
+      method fnil ty = "nil"
     end)
 
 
@@ -264,5 +266,6 @@ let rec ufuns_of phi =
       method fiff r1 r2 = r1 @ r2
       method fforall (x, _) r1 = Set_.diff r1 [x]
       method fexists (x, _) r1 = Set_.diff r1 [x]
+      method fnil ty = []
     end)
     phi

@@ -64,6 +64,7 @@ let fold_op f =
       method fufun _ _ _ = assert false
       method fcoerce ty t = assert false
       method fformula phi = f#fformula phi
+      method fnil ty = assert false
     end)
 
 (** {6 Inspectors} *)
@@ -105,6 +106,7 @@ let size =
       method fufun _ _ ns = Integer.sum_list ns + 1
       method fcoerce ty t = assert false
       method fformula phi = assert false
+      method fnil ty = assert false
     end)
 
 let rec sexp_of_atom atom =
@@ -176,6 +178,8 @@ and sexp_of_formula ?(smt2=false) =
       method fiff s1 s2 = "(iff " ^ s1 ^ " " ^ s2 ^ ")"
       method fforall (x, ty) s = assert false
       method fexists (x, ty) s = assert false
+      method fnil ty = "nil"
+
     end)
 
 and sexp_of t =
@@ -211,6 +215,7 @@ and sexp_of t =
       method fufun _ _ _ = assert false
       method fcoerce ty t = assert false
       method fformula phi = sexp_of_formula phi
+      method fnil ty = "nil"
     end) t
 
 
@@ -250,6 +255,7 @@ let to_lin_int_exp =
       method fufun _ _ _ = invalid_arg "CunTerm.to_lin_int_exp"
       method fcoerce ty t = invalid_arg "CunTerm.to_lin_int_exp"
       method fformula phi = invalid_arg "CunTerm.to_lin_int_exp"
+      method fnil ty = invalid_arg "CunTerm.to_lin_int_exp"
     end)
 
 let to_lin_real_exp =
@@ -284,6 +290,7 @@ let to_lin_real_exp =
       method fufun _ _ _ = invalid_arg "CunTerm.to_lin_real_exp"
       method fcoerce ty t = invalid_arg "CunTerm.to_lin_real_exp"
       method fformula phi = invalid_arg "CunTerm.to_lin_real_exp"
+      method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
     end)
 
 let to_poly_int_exp =
@@ -323,6 +330,7 @@ let to_poly_int_exp =
       method fufun _ _ _ = invalid_arg "CunTerm.to_poly_int_exp"
       method fcoerce ty t = invalid_arg "CunTerm.to_poly_int_exp"
       method fformula phi = invalid_arg "CunTerm.to_poly_int_exp"
+      method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
     end)
 
 let to_poly_real_exp =
@@ -362,6 +370,7 @@ let to_poly_real_exp =
       method fufun _ _ _ = invalid_arg "CunTerm.to_poly_real_exp"
       method fcoerce ty t = invalid_arg "CunTerm.to_poly_real_exp"
       method fformula phi = invalid_arg "CunTerm.to_poly_real_exp"
+      method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
     end)
 
 let lin_poly_exp_of _ = raise (Global.NotImplemented "CunTerm.lin_poly_exp_of")
@@ -471,6 +480,7 @@ let ufuns_of f_formula =
       method fufun _ x rs = x :: List.concat rs
       method fcoerce _ r = r
       method fformula phi = f_formula phi
+      method fnil ty = []
     end)
 
 let int_to_real =
@@ -495,6 +505,7 @@ let int_to_real =
       method fufun ty x = mk_ufun (x, ty)
       method fcoerce = mk_coerce
       method fformula = assert false
+      method fnil ty = assert false
     end)
 
 let real_to_int =
@@ -519,6 +530,7 @@ let real_to_int =
       method fufun ty x = mk_ufun (x, ty)
       method fcoerce = mk_coerce
       method fformula = assert false
+      method fnil ty = assert false
     end)
 
 
@@ -578,4 +590,5 @@ let has_ufun =
       method fufun _ _ rs = List.exists id rs
       method fcoerce _ r1 = r1
       method fformula _ = assert false
+      method fnil _ = assert false
     end)

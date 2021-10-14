@@ -207,6 +207,7 @@ let of_term =
       method faset a n m e = assert false
       method fcoerce ty t = assert false
       method fformula phi = assert false
+      method fnil ty = assert false
     end)
 
 let of_atom =
@@ -245,6 +246,7 @@ let of_formula =
       method fiff s1 s2 = assert false
       method fforall _ _ = assert false
       method fexists _ _ = assert false
+      method fnil ty = assert false
     end)
 let of_formula =
   Formula.elim_imply_iff

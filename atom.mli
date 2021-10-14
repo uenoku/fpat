@@ -20,6 +20,7 @@ val mk_false : t
 val mk_var : Idnt.t -> Term.t list -> t
 val mk_urel : Const.t -> Term.t -> t
 val mk_brel : Const.t -> Term.t -> Term.t -> t
+val mk_nil : Type.t -> t  
 
 val eq : Type.t -> Term.t -> Term.t -> t
 val neq : Type.t -> Term.t -> Term.t -> t

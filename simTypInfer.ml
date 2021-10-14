@@ -120,6 +120,8 @@ let cgen_term f_formula env t ty =
         (*ty must be bool*)
         let constr, phi = f_formula env phi in
         constr @ unify ty Type.mk_bool, Formula.term_of phi
+      method fnil t1 = fun env ty -> 
+        unify ty (Type.mk_list t1), Term.mk_const (Nil ty)
     end)
     t env ty
 let cgen_term =
@@ -255,7 +257,9 @@ let rec cgen_formula env phi =
         let ty = Type.new_var () in
         let constr1, phi1 = r1 ((x, ty) :: env) in
         constr1, Formula.exists [x, ty] phi1
-    end)
+      method fnil ty = fun env -> 
+        [], Formula.mk_nil ty
+    end) 
     phi env
 let cgen_formula = Logger.log_block2 "SimTypInfer.cgen_formula" cgen_formula
 

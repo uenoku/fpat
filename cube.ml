@@ -26,7 +26,9 @@ let of_formula =
       method fiff _ _ _ _ = raise NonCube
       method fforall _ _ _ = raise NonCube
       method fexists _ _ _ = raise NonCube
+      method fnil ty = raise NonCube
     end)
+
 
 (** {6 Auxiliary destructors} *)
 

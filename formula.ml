@@ -111,6 +111,8 @@ let of_atom = Atom.term_of
 
 let mk_true = Atom.mk_true |> of_atom
 let mk_false = Atom.mk_false |> of_atom
+let mk_nil ty = Atom.mk_nil ty |> of_atom 
+
 let mk_var x ts = Atom.mk_var x ts |> of_atom
 let mk_brel c t1 t2 = Atom.mk_brel c t1 t2 |> of_atom
 
@@ -266,6 +268,8 @@ let lazy_para f phi =
            lazy (f#fforall xty phi1 r1)
          method fexists xty phi1 r1 =
            lazy (f#fexists xty phi1 r1)
+         method fnil ty = 
+           lazy (f#fnil ty)
        end)
        phi)
 
@@ -282,6 +286,7 @@ let fold f =
       method fiff _ r1 _ r2 = f#fiff r1 r2
       method fforall xty _ = f#fforall xty
       method fexists xty _ = f#fexists xty
+      method fnil ty = f#fnil ty
     end)
 
 let fold_pos f phi =
@@ -297,6 +302,7 @@ let fold_pos f phi =
       method fiff r1 r2 = fun pos -> f#fiff (r1 pos) (r2 pos)
       method fforall xty r1 = fun pos -> f#fforall xty (r1 pos)
       method fexists xty r1 = fun pos -> f#fexists xty (r1 pos)
+      method fnil ty = fun pos -> f#fnil ty
     end)
     phi
     true
@@ -314,6 +320,7 @@ let visit f =
       method fiff phi1 _ phi2 _ = f#fiff phi1 phi2
       method fforall xty phi1 _ = f#fforall xty phi1
       method fexists xty phi1 _ = f#fexists xty phi1
+      method fnil = f#fnil
     end)
 
 let map_atom f =
@@ -329,6 +336,7 @@ let map_atom f =
       method fiff phi1 phi2 = mk_iff phi1 phi2
       method fforall xty phi1 = forall [xty] phi1
       method fexists xty phi1 = exists [xty] phi1
+      method fnil ty = mk_nil ty
     end)
 
 let fold_band f =
@@ -344,6 +352,7 @@ let fold_band f =
       method fiff b1 b2 = b1 && b2
       method fforall _ b1 = b1
       method fexists _ b1 = b1
+      method fnil ty = true
     end)
 
 let fold_bor f =
@@ -359,6 +368,7 @@ let fold_bor f =
       method fiff b1 b2 = b1 || b2
       method fforall _ b1 = b1
       method fexists _ b1 = b1
+      method fnil ty = false
     end)
 
 let fold_set f =
@@ -374,6 +384,7 @@ let fold_set f =
       method fiff r1 r2 = r1 @ r2
       method fforall _ r1 = r1
       method fexists _ r1 = r1
+      method fnil ty = []
     end)
 
 (** {6 Printers} *)
@@ -412,6 +423,8 @@ let pr_tex ppf phi =
          Format.fprintf ppf "\\forall %a.@. %a" TypEnv.pr_elem_compact xty r1 0
        method fexists xty r1 = fun ppf l ->
          Format.fprintf ppf "\\exists %a.@. %a" TypEnv.pr_elem_compact xty r1 0
+       method fnil ty = fun ppf l -> 
+         Format.fprintf ppf "\\nil %a" Type.pr ty
      end)
     phi ppf 4;
   Format.fprintf ppf "@]"
@@ -448,6 +461,8 @@ let pr ppf phi =
         Format.fprintf ppf "A %a. %a" TypEnv.pr_elem_compact xty r1 0
       method fexists xty r1 = fun ppf l ->
         Format.fprintf ppf "E %a. %a" TypEnv.pr_elem_compact xty r1 0
+      method fnil ty = fun ppf l ->
+        Format.fprintf ppf "nil"
     end)
     phi ppf 4;
   Format.fprintf ppf "@]"
@@ -602,6 +617,7 @@ let conjuncts_of =
       (*[imply phi1 phi2; imply phi2 phi1]*)
       method fforall xty phi1 _ = [forall [xty] phi1]
       method fexists xty phi1 _ = [exists [xty] phi1]
+      method fnil ty = [mk_nil ty]
     end)
 
 let disjuncts_of =
@@ -619,6 +635,7 @@ let disjuncts_of =
       (*[band [phi1; phi2]; band [bnot phi1; bnot phi2]]*)
       method fforall xty phi1 _ = [forall [xty] phi1]
       method fexists xty phi1 _ = [exists [xty] phi1]
+      method fnil ty = [mk_nil ty]
     end)
 
 (** {6 Operators} *)
@@ -639,6 +656,7 @@ let elim_imply_iff =
         bor [band [phi1'; phi2']; band [bnot phi1'; bnot phi2']]
       method fforall xty phi' = forall [xty] phi'
       method fexists xty phi' = exists [xty] phi'
+      method fnil ty = mk_nil ty
     end)
 
 let eqcls_of =

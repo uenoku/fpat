@@ -33,6 +33,8 @@ let of_formula =
         if b then forall [xty] (r1 b) else exists [xty] (r1 b)
       method fexists xty r1 = fun b ->
         if b then exists [xty] (r1 b) else forall [xty] (r1 b)
+      method fnil ty = fun b ->
+        mk_nil ty
     end)
 let of_formula phi = of_formula phi true
 let of_formula =
@@ -62,4 +64,5 @@ let map_literal f =
       method fiff _ _ _ _ = assert false
       method fforall xty _ phi' = forall [xty] phi'
       method fexists xty _ phi' = exists [xty] phi'
+      method fnil ty = mk_nil ty
     end)

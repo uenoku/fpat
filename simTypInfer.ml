@@ -211,6 +211,7 @@ let cgen_atom f_formula env =
         let constr, t' = cgen_term f_formula env t Type.mk_int in
         constr, IntAtom.divides n t'
       method fterm c ts =
+        print_string "fterm";
         let t = Term.mk_app (Term.mk_const c) ts in
         let constr1, t1 = cgen_term f_formula env t Type.mk_bool in
         constr1, t1 |> Atom.of_term

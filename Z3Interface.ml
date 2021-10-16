@@ -174,7 +174,7 @@ let of_term =
       method fcoerce _ r = fun var_tenv bind_tenv ->
         Z3.Arithmetic.Integer.mk_int2real ctx (r var_tenv bind_tenv)
       method fformula = !of_formula'
-      method fnil ty = assert false
+      method fnil ty = fun var_tenv bind_tenv -> Expr.mk_const ctx (sym_of_var (Idnt.make "nil")) (ty |> of_type)
       method fcons ty t1 t2 = fun var_tenv bind_tenv -> Expr.mk_const ctx (sym_of_var (Idnt.make "cons")) (ty |> of_type)
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term

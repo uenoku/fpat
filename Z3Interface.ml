@@ -81,6 +81,7 @@ let rec of_type ty =
         | TypConst.Int -> int_type
         | TypConst.Real -> real_type
         | TypConst.Top -> of_type !SMTProver.var_type
+        | TypConst.List -> (* FIX *) intlist_type
         | _ ->
           raise (Global.NotImplemented "fbase in Z3Interface.of_type")
       method farrow r1 r2 =

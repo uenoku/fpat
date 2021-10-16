@@ -125,7 +125,7 @@ let cgen_term f_formula env t ty =
       method fcons t' t1 t2 = fun env ty -> 
         let constr1, t1 = t1 env ty in
         let constr2, t2 = t2 env ty in
-        constr1@constr2@unify ty (Type.mk_list t'), Term.mk_app (Term.mk_const (Cons ty)) [t1; t2]
+        constr1@constr2@unify ty (Type.mk_list t'), Term.mk_app (Term.mk_const (Cons t')) [t1; t2]
     end)
     t env ty
 let cgen_term =

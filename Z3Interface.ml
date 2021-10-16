@@ -58,6 +58,10 @@ let int_type = Arithmetic.Integer.mk_sort ctx
 let bool_type = Boolean.mk_sort ctx
 let real_type = Arithmetic.Real.mk_sort ctx
 
+let intlist_type = Z3List.mk_list_s ctx "IntList" int_type
+let nil_decl = Z3List.get_nil_decl intlist_type 
+let cons_decl = Z3List.get_cons_decl intlist_type
+
 let tuple_sort_of sorts =
   let tuple_num = List.length sorts in
   Tuple.mk_sort ctx
@@ -174,8 +178,8 @@ let of_term =
       method fcoerce _ r = fun var_tenv bind_tenv ->
         Z3.Arithmetic.Integer.mk_int2real ctx (r var_tenv bind_tenv)
       method fformula = !of_formula'
-      method fnil ty = fun var_tenv bind_tenv -> Expr.mk_const ctx (sym_of_var (Idnt.make "nil")) (ty |> of_type)
-      method fcons ty t1 t2 = fun var_tenv bind_tenv -> Expr.mk_const ctx (sym_of_var (Idnt.make "cons")) (ty |> of_type)
+      method fnil ty = fun var_tenv bind_tenv -> Z3List.nil intlist_type
+      method fcons ty t1 t2 = fun var_tenv bind_tenv -> FuncDecl.apply cons_decl [t1 var_tenv bind_tenv; t2 var_tenv bind_tenv]
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term
 

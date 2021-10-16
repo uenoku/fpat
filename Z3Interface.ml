@@ -175,6 +175,7 @@ let of_term =
         Z3.Arithmetic.Integer.mk_int2real ctx (r var_tenv bind_tenv)
       method fformula = !of_formula'
       method fnil ty = assert false
+      method fcons ty t1 t2 = assert false
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term
 

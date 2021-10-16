@@ -39,6 +39,7 @@ let of_term =
       method fcoerce ty t = assert false
       method fformula phi = assert false
       method fnil ty = assert false
+      method fcons ty t1 t2 = assert false
     end)
 
 let of_atom =
@@ -80,6 +81,7 @@ let of_formula =
       method fforall (x, _) s = Atp_batch.Forall(Idnt.serialize x , s)
       method fexists (x, _) s = Atp_batch.Exists(Idnt.serialize x , s)
       method fnil ty = assert false
+      method fcons ty t1 t2 = assert false
     end)
 
 let rec term_of = function

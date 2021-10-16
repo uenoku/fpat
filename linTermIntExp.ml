@@ -71,6 +71,7 @@ let of_term =
       method fcoerce ty t = invalid_arg "LinTermIntExp.of_term"
       method fformula _ = invalid_arg "LinTermIntExp.of_term"
       method fnil ty = invalid_arg "LinTermIntExp.of_term"
+      method fcons ty t1 t2 = invalid_arg "LinTermIntExp.of_term"
     end)
 
 let term_of (nxs, n) =

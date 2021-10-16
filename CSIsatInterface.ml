@@ -208,6 +208,7 @@ let of_term =
       method fcoerce ty t = assert false
       method fformula phi = assert false
       method fnil ty = assert false
+      method fcons ty r1 r2 = assert false
     end)
 
 let of_atom =

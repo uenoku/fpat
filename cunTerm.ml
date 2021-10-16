@@ -36,6 +36,7 @@ let rec fold f t =
   | Const(Const.UFun(ty, x)), ts -> f#fufun ty x (List.map (fold f) ts)
   | Const(Const.Coerce(ty)), [t] -> f#fcoerce ty (fold f t)
   | Const(Const.Nil(ty)), [] -> f#fnil ty
+  | Const(Const.Cons(ty)), [t1; t2] -> f#fcons ty (fold f t1) (fold f t2)
   | Const(_), _ -> f#fformula (t |> Formula.of_term)
   | _ ->
     invalid_arg ("not supported in CunTerm.fold: " ^
@@ -65,6 +66,7 @@ let fold_op f =
       method fcoerce ty t = assert false
       method fformula phi = f#fformula phi
       method fnil ty = assert false
+      method fcons ty = assert false
     end)
 
 (** {6 Inspectors} *)
@@ -106,7 +108,8 @@ let size =
       method fufun _ _ ns = Integer.sum_list ns + 1
       method fcoerce ty t = assert false
       method fformula phi = assert false
-      method fnil ty = assert false
+      method fnil ty = 1
+      method fcons ty _ t2 =  t2 + 1
     end)
 
 let rec sexp_of_atom atom =
@@ -216,6 +219,7 @@ and sexp_of t =
       method fcoerce ty t = assert false
       method fformula phi = sexp_of_formula phi
       method fnil ty = "nil"
+      method fcons ty t1 t2 = "(cons " ^ t1 ^ " " ^ t2 ^ ")"
     end) t
 
 
@@ -256,6 +260,7 @@ let to_lin_int_exp =
       method fcoerce ty t = invalid_arg "CunTerm.to_lin_int_exp"
       method fformula phi = invalid_arg "CunTerm.to_lin_int_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_int_exp"
+      method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_int_exp"
     end)
 
 let to_lin_real_exp =
@@ -291,6 +296,7 @@ let to_lin_real_exp =
       method fcoerce ty t = invalid_arg "CunTerm.to_lin_real_exp"
       method fformula phi = invalid_arg "CunTerm.to_lin_real_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
+      method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_int_exp"
     end)
 
 let to_poly_int_exp =
@@ -331,6 +337,7 @@ let to_poly_int_exp =
       method fcoerce ty t = invalid_arg "CunTerm.to_poly_int_exp"
       method fformula phi = invalid_arg "CunTerm.to_poly_int_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
+      method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_real_exp"
     end)
 
 let to_poly_real_exp =
@@ -371,6 +378,7 @@ let to_poly_real_exp =
       method fcoerce ty t = invalid_arg "CunTerm.to_poly_real_exp"
       method fformula phi = invalid_arg "CunTerm.to_poly_real_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
+      method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_real_exp"
     end)
 
 let lin_poly_exp_of _ = raise (Global.NotImplemented "CunTerm.lin_poly_exp_of")
@@ -481,6 +489,7 @@ let ufuns_of f_formula =
       method fcoerce _ r = r
       method fformula phi = f_formula phi
       method fnil ty = []
+      method fcons ty t1 t2 = t1 @ t2
     end)
 
 let int_to_real =
@@ -506,6 +515,7 @@ let int_to_real =
       method fcoerce = mk_coerce
       method fformula = assert false
       method fnil ty = assert false
+      method fcons ty t1 t2 = assert false
     end)
 
 let real_to_int =
@@ -531,6 +541,7 @@ let real_to_int =
       method fcoerce = mk_coerce
       method fformula = assert false
       method fnil ty = assert false
+      method fcons ty t1 t2 = assert false
     end)
 
 
@@ -591,4 +602,5 @@ let has_ufun =
       method fcoerce _ r1 = r1
       method fformula _ = assert false
       method fnil _ = assert false
+      method fcons _ _ _ = assert false
     end)

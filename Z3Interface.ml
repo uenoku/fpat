@@ -62,6 +62,12 @@ let intlist_type = Z3List.mk_list_s ctx "IntList" int_type
 let nil_decl = Z3List.get_nil_decl intlist_type 
 let cons_decl = Z3List.get_cons_decl intlist_type
 
+let is_nil = FuncDecl.mk_func_decl_s ctx "is_nil" [intlist_type] bool_type
+let is_cons = FuncDecl.mk_func_decl_s ctx "is_cons" [intlist_type] bool_type
+
+let hd = FuncDecl.mk_func_decl_s ctx "hd" [intlist_type] int_type
+let tl = FuncDecl.mk_func_decl_s ctx "tl" [intlist_type] intlist_type 
+
 let tuple_sort_of sorts =
   let tuple_num = List.length sorts in
   Tuple.mk_sort ctx
@@ -181,11 +187,10 @@ let of_term =
       method fformula = !of_formula'
       method fnil ty = fun var_tenv bind_tenv -> Z3List.nil intlist_type
       method fcons ty t1 t2 = fun var_tenv bind_tenv -> FuncDecl.apply cons_decl [t1 var_tenv bind_tenv; t2 var_tenv bind_tenv]
-      method fhd ty t = assert false
-      method ftl ty t = assert false
-      method fiscons ty t = assert false
-      method fisnil ty t = assert false
-
+      method fhd ty t1 = fun var_tenv bind_tenv -> FuncDecl.apply hd [t1 var_tenv bind_tenv]
+      method ftl ty t1 = fun var_tenv bind_tenv -> FuncDecl.apply tl [t1 var_tenv bind_tenv]
+      method fiscons ty t = fun var_tenv bind_tenv -> FuncDecl.apply is_cons [t var_tenv bind_tenv]
+      method fisnil ty t = fun var_tenv bind_tenv -> FuncDecl.apply is_nil [t var_tenv bind_tenv]
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term
 

@@ -14,7 +14,7 @@ let mk_ufun (x, ty) ts = mk_app (mk_const (Const.UFun(ty, x))) ts
 (** {6 Morphisms} *)
 
 let rec fold f t =
-  (*Logger.printf "folding %a@," Term.pr t;*)
+  Logger.printf "folding %a@," Term.pr t;
   match fun_args t with
   | Var(x), ts -> f#fvar x (List.map (fold f) ts)
   | Const(Const.Unit), [] -> f#funit ()

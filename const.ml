@@ -1076,6 +1076,8 @@ let subst_tvars tsub = function
   (* lists *)
   | Nil(ty) -> Nil(Type.subst tsub ty)
   | Cons(ty) -> Cons(Type.subst tsub ty)
+  | IsCons(ty) -> IsCons(Type.subst tsub ty)
+  | IsNil(ty) -> IsNil(Type.subst tsub ty)
   (* uninterpreted functions *)
   | UFun(ty, id) -> UFun(Type.subst tsub ty, id)
   (* path constructors *)

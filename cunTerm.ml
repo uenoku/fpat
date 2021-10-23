@@ -234,10 +234,10 @@ and sexp_of t =
       method fformula phi = sexp_of_formula phi
       method fnil ty = "nil"
       method fcons ty t1 t2 = "(cons " ^ t1 ^ " " ^ t2 ^ ")"
-      method fhd ty t = assert false
-      method ftl ty t = assert false
-      method fiscons ty t = assert false
-      method fisnil ty t = assert false
+      method fhd ty t = "(hd " ^ t ^ ")"
+      method ftl ty t = "(tl " ^ t ^ ")"
+      method fiscons ty t = "(is_cons " ^ t ^ ")"
+      method fisnil ty t = "(is_cons " ^ t ^ ")"
     end) t
 
 

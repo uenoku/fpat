@@ -127,10 +127,18 @@ let cgen_term f_formula env t ty =
         let constr1, t1 = t1 env t' in
         let constr2, t2 = t2 env ty in
         constr1@constr2@unify ty (Type.mk_list t'), Term.mk_app (Term.mk_const (Cons t')) [t1; t2]
-      method fhd ty t = assert false
-      method ftl ty t = assert false
-      method fiscons ty t = assert false
-      method fisnil ty t = assert false
+      method fhd t r = fun env ty ->
+        let constr, t1 = r env (Type.mk_list t) in
+        constr@unify ty t, Term.mk_const (Hd ty)
+      method ftl t r = fun env ty -> 
+        let constr, t1 = r env (Type.mk_list t) in
+        constr@unify ty (Type.mk_list t), Term.mk_const (Tl ty)
+      method fiscons t r = fun env ty -> 
+        let constr, t1 = r env (Type.mk_list t) in
+        constr@unify ty (Type.mk_bool), Term.mk_const (IsCons ty)
+      method fisnil t r = fun env ty -> 
+        let constr, t1 = r env (Type.mk_list t) in
+        constr@unify ty (Type.mk_bool), Term.mk_const (IsNil ty)
     end)
     t env ty
 let cgen_term =

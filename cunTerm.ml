@@ -41,7 +41,9 @@ let rec fold f t =
   | Const(Const.IsNil(ty)), [t1] -> f#fisnil ty (fold f t1) 
   | Const(Const.Hd(ty)), [t1] -> f#fhd ty (fold f t1) 
   | Const(Const.Tl(ty)), [t1] -> f#ftl ty (fold f t1) 
-  | Const(_), _ -> f#fformula (t |> Formula.of_term)
+  | Const(_), _ -> 
+    Logger.printf "go to formula %a@," Term.pr t;
+    f#fformula (t |> Formula.of_term)
   | _ ->
     invalid_arg ("not supported in CunTerm.fold: " ^
                  Printer.string_of Term.pr t)

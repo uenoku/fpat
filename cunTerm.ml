@@ -37,6 +37,10 @@ let rec fold f t =
   | Const(Const.Coerce(ty)), [t] -> f#fcoerce ty (fold f t)
   | Const(Const.Nil(ty)), [] -> f#fnil ty
   | Const(Const.Cons(ty)), [t1; t2] -> f#fcons ty (fold f t1) (fold f t2)
+  | Const(Const.IsCons(ty)), [t1] -> f#fiscons ty (fold f t1) 
+  | Const(Const.IsNil(ty)), [t1] -> f#fisnil ty (fold f t1) 
+  | Const(Const.Hd(ty)), [t1] -> f#fhd ty (fold f t1) 
+  | Const(Const.Tl(ty)), [t1] -> f#ftl ty (fold f t1) 
   | Const(_), _ -> f#fformula (t |> Formula.of_term)
   | _ ->
     invalid_arg ("not supported in CunTerm.fold: " ^
@@ -66,7 +70,11 @@ let fold_op f =
       method fcoerce ty t = assert false
       method fformula phi = f#fformula phi
       method fnil ty = assert false
-      method fcons ty = assert false
+      method fcons ty r1 r2 = assert false
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 (** {6 Inspectors} *)
@@ -110,6 +118,10 @@ let size =
       method fformula phi = assert false
       method fnil ty = 1
       method fcons ty _ t2 =  t2 + 1
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 let rec sexp_of_atom atom =
@@ -220,6 +232,10 @@ and sexp_of t =
       method fformula phi = sexp_of_formula phi
       method fnil ty = "nil"
       method fcons ty t1 t2 = "(cons " ^ t1 ^ " " ^ t2 ^ ")"
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end) t
 
 
@@ -261,6 +277,11 @@ let to_lin_int_exp =
       method fformula phi = invalid_arg "CunTerm.to_lin_int_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_int_exp"
       method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_int_exp"
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
+ 
     end)
 
 let to_lin_real_exp =
@@ -297,6 +318,11 @@ let to_lin_real_exp =
       method fformula phi = invalid_arg "CunTerm.to_lin_real_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
       method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_int_exp"
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
+ 
     end)
 
 let to_poly_int_exp =
@@ -338,6 +364,11 @@ let to_poly_int_exp =
       method fformula phi = invalid_arg "CunTerm.to_poly_int_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
       method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_real_exp"
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
+ 
     end)
 
 let to_poly_real_exp =
@@ -379,6 +410,10 @@ let to_poly_real_exp =
       method fformula phi = invalid_arg "CunTerm.to_poly_real_exp"
       method fnil ty = invalid_arg "CunTerm.to_lin_real_exp"
       method fcons ty t1 t2 = invalid_arg "CunTerm.to_lin_real_exp"
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 let lin_poly_exp_of _ = raise (Global.NotImplemented "CunTerm.lin_poly_exp_of")
@@ -490,6 +525,10 @@ let ufuns_of f_formula =
       method fformula phi = f_formula phi
       method fnil ty = []
       method fcons ty t1 t2 = t1 @ t2
+      method fhd ty t = t
+      method ftl ty t = t
+      method fiscons ty t = t
+      method fisnil ty t = t
     end)
 
 let int_to_real =
@@ -516,6 +555,10 @@ let int_to_real =
       method fformula = assert false
       method fnil ty = assert false
       method fcons ty t1 t2 = assert false
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 let real_to_int =
@@ -542,6 +585,10 @@ let real_to_int =
       method fformula = assert false
       method fnil ty = assert false
       method fcons ty t1 t2 = assert false
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 
@@ -603,4 +650,8 @@ let has_ufun =
       method fformula _ = assert false
       method fnil _ = assert false
       method fcons _ _ _ = assert false
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)

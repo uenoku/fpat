@@ -209,6 +209,10 @@ let of_term =
       method fformula phi = assert false
       method fnil ty = assert false
       method fcons ty r1 r2 = assert false
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
     end)
 
 let of_atom =

@@ -181,6 +181,11 @@ let of_term =
       method fformula = !of_formula'
       method fnil ty = fun var_tenv bind_tenv -> Z3List.nil intlist_type
       method fcons ty t1 t2 = fun var_tenv bind_tenv -> FuncDecl.apply cons_decl [t1 var_tenv bind_tenv; t2 var_tenv bind_tenv]
+      method fhd ty t = assert false
+      method ftl ty t = assert false
+      method fiscons ty t = assert false
+      method fisnil ty t = assert false
+
     end)
 let of_term = Logger.log_block3 "Z3Interface.of_term" of_term
 

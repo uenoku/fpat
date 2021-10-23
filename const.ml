@@ -1078,6 +1078,8 @@ let subst_tvars tsub = function
   | Cons(ty) -> Cons(Type.subst tsub ty)
   | IsCons(ty) -> IsCons(Type.subst tsub ty)
   | IsNil(ty) -> IsNil(Type.subst tsub ty)
+  | Hd(ty) -> Hd(Type.subst tsub ty)
+  | Tl(ty) -> Tl(Type.subst tsub ty)
   (* uninterpreted functions *)
   | UFun(ty, id) -> UFun(Type.subst tsub ty, id)
   (* path constructors *)
